@@ -28,12 +28,4 @@ public class ClientModel implements Serializable {
     @Column(nullable = false, unique = true)
     @Getter @Setter private Long telephone;
 
-    public ClientModel(String fullName, String email, String cpf, int ddd, Long telephone) {
-        this.createdAt = LocalDateTime.now();
-        this.fullName = fullName;
-        this.email = email;
-        this.cpf = cpf;
-        this.ddd = ddd;
-        this.telephone = telephone;
-    }
 }
