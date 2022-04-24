@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -27,6 +28,16 @@ public class ClientController {
         ClientModel client = new ClientModel();
         BeanUtils.copyProperties(clientDto, client);
         client.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(client));
+        try {
+            ClientModel clientModel = clientService.save(client);
+            return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(client));
+        } catch (Exception e) {
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("message", e.getMessage());
+            map.put("status", HttpStatus.UNPROCESSABLE_ENTITY.value());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(map);
+        }
+
+
     }
 }
