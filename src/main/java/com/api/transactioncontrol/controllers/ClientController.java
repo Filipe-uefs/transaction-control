@@ -3,9 +3,12 @@ package com.api.transactioncontrol.controllers;
 import com.api.transactioncontrol.dtos.ClientDto;
 import com.api.transactioncontrol.models.ClientModel;
 import com.api.transactioncontrol.services.ClientService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +35,17 @@ public class ClientController {
             ClientModel clientModel = clientService.save(client);
             return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(client));
         } catch (Exception e) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
+            HashMap<String, Object> map = new HashMap<>();
             map.put("message", e.getMessage());
             map.put("status", HttpStatus.UNPROCESSABLE_ENTITY.value());
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(map);
         }
+    }
 
-
+    @GetMapping
+    public ResponseEntity<Page<ClientModel>> getAllClients(
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
+                    Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.getAllClients(pageable));
     }
 }
