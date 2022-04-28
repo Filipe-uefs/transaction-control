@@ -23,4 +23,8 @@ public class ClientService {
     public Page<ClientModel> getAllClients(Pageable pageable) {
         return clientRepository.findAll(pageable);
     }
+
+    public ClientModel getClientByCPF(String cpf) {
+        return clientRepository.findOneByCpf(cpf);
+    }
 }
