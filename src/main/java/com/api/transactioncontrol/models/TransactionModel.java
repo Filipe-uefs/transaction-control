@@ -30,4 +30,5 @@ public class TransactionModel implements Serializable {
     @JoinColumn(name = "transaction_status_id")
     @Getter @Setter private TransactionStatusModel transactionStatus;
     @Getter @Setter private LocalDateTime createdAt;
+    @Getter @Setter private double value;
 }

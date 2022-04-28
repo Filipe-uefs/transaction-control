@@ -19,4 +19,6 @@ public class TransactionDto {
     private TransactionTypeDto transactionType;
     @NotNull
     private TransactionStatusDto transactionStatus;
+    @NotNull
+    private double value;
 }
