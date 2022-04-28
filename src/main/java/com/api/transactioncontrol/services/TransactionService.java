@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class TransactionService {
 
@@ -15,5 +17,10 @@ public class TransactionService {
 
     public Page<TransactionModel> getAllTransactions(Pageable pageable) {
         return transactionRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public TransactionModel save(TransactionModel transactionModel) {
+        return transactionRepository.save(transactionModel);
     }
 }

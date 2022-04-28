@@ -3,6 +3,8 @@ package com.api.transactioncontrol.controllers;
 import com.api.transactioncontrol.dtos.ClientDto;
 import com.api.transactioncontrol.models.ClientModel;
 import com.api.transactioncontrol.services.ClientService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,12 +23,14 @@ import java.util.HashMap;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/client")
+@Api(value = "Clients")
 public class ClientController {
 
     @Autowired
     ClientService clientService;
 
     @PostMapping
+    @ApiOperation(value = "Create Client")
     public ResponseEntity<Object> saveClientDto (@RequestBody @Valid ClientDto clientDto) {
         ClientModel client = new ClientModel();
         BeanUtils.copyProperties(clientDto, client);
@@ -43,6 +47,7 @@ public class ClientController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Get Clients")
     public ResponseEntity<Page<ClientModel>> getAllClients(
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
                     Pageable pageable) {

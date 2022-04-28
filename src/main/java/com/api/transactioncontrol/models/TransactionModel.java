@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -28,4 +29,5 @@ public class TransactionModel implements Serializable {
     @OneToOne
     @JoinColumn(name = "transaction_status_id")
     @Getter @Setter private TransactionStatusModel transactionStatus;
+    @Getter @Setter private LocalDateTime createdAt;
 }
