@@ -9,4 +9,5 @@ import java.util.UUID;
 @Repository
 public interface ClientRepository extends JpaRepository<ClientModel, UUID> {
     ClientModel findOneByCpf(String cpf);
+    ClientModel findByDddAndTelephone(int ddd, Long telephone);
 }

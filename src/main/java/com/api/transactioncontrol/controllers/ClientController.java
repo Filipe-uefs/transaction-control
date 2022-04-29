@@ -53,4 +53,10 @@ public class ClientController {
                     Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.getAllClients(pageable));
     }
+
+    @GetMapping("/getByNumber")
+    @ApiOperation(value = "Get Client by number")
+    public ResponseEntity<ClientModel> getClientByNumber(int ddd, Long telephone) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByNumber(ddd, telephone));
+    }
 }

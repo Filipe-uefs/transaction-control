@@ -27,4 +27,8 @@ public class ClientService {
     public ClientModel getClientByCPF(String cpf) {
         return clientRepository.findOneByCpf(cpf);
     }
+
+    public ClientModel getClientByNumber(int ddd, Long telephone) {
+        return clientRepository.findByDddAndTelephone(ddd, telephone);
+    }
 }
