@@ -33,9 +33,22 @@ public class TransactionService {
         } else {
             transactions = transactionRepository.findByRecipientClient(client);
         }
-
         return transactions;
     }
+
+    public List<TransactionModel> getTransactionsByTelephone(int ddd, Long telephone, String type) {
+        ClientModel client = clientService.getClientByNumber(ddd, telephone);
+        List<TransactionModel> transactions;
+        if (Objects.isNull(client)) {
+            transactions = new ArrayList<>();
+        } else if (Objects.equals(type, "sent")) {
+            transactions = transactionRepository.findBySenderClient(client);
+        } else {
+            transactions = transactionRepository.findByRecipientClient(client);
+        }
+        return transactions;
+    }
+
     @Transactional
     public TransactionModel save(TransactionModel transactionModel) {
         return transactionRepository.save(transactionModel);

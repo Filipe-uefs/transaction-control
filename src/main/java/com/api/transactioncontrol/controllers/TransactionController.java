@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -44,11 +46,22 @@ public class TransactionController {
             return ResponseEntity.status(HttpStatus.OK).body(transactionService.getAllTransactions(pageable));
     }
 
-    @GetMapping("/getTransactionsSentByCPF")
-    @ApiOperation(value = "Get transactions sent by cpf")
-    public ResponseEntity<List<TransactionModel>> getTransactionsSentByCPF(String cpf) {
+    @GetMapping("/getTransactionsByCPF")
+    @ApiOperation(value = "Get transactions sent or received by cpf")
+    public ResponseEntity<List<TransactionModel>> getTransactionsByCPF(
+            @NotNull @NotBlank String cpf, @NotNull @NotBlank String type) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(transactionService.getTransactionsByCPF(cpf, "sent"));
+                .body(transactionService.getTransactionsByCPF(cpf, type));
+    }
+
+    @GetMapping("/getTransactionsByTelephone")
+    @ApiOperation(value = "Get transactions sent or received by telephone")
+    public ResponseEntity<List<TransactionModel>> getTransactionsByTelephone(
+            @NotNull @NotBlank int ddd,
+            @NotNull @NotBlank Long telephone,
+            @NotNull @NotBlank String type) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(transactionService.getTransactionsByTelephone(ddd, telephone, type));
     }
 
     @PostMapping
