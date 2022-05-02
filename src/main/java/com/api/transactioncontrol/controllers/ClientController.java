@@ -36,8 +36,8 @@ public class ClientController {
         BeanUtils.copyProperties(clientDto, client);
         client.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
         try {
-            ClientModel clientModel = clientService.save(client);
-            return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(client));
+            ClientModel clientRegistered = clientService.save(client);
+            return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(clientRegistered));
         } catch (Exception e) {
             HashMap<String, Object> map = new HashMap<>();
             map.put("message", e.getMessage());
@@ -58,5 +58,11 @@ public class ClientController {
     @ApiOperation(value = "Get Client by number")
     public ResponseEntity<ClientModel> getClientByNumber(int ddd, Long telephone) {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByNumber(ddd, telephone));
+    }
+
+    @GetMapping("/getByCPF")
+    @ApiOperation(value = "Get Client by CPF")
+    public ResponseEntity<ClientModel> getClientByCPF(String cpf) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByCPF(cpf));
     }
 }
